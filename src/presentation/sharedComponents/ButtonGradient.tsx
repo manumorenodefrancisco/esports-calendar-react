@@ -1,20 +1,20 @@
 import {StyleSheet, TouchableOpacity, Text} from "react-native";
+import {LinearGradient} from "expo-linear-gradient";
 //import {FontAwesome} from "@expo/vector-icons";
 
 type Props = {
     text: string;
     fnDeOtroComponente: () => void;
     type?: "default" | "md" | "lg";
-    iconName?: any;
 }
 
-export const ButtonWithIcon = (
-    {text, fnDeOtroComponente, type = "default", iconName}: Props
+export const ButtonGradient = (
+    {text, fnDeOtroComponente, type = "default"}: Props
 ) => {
     return (
         <TouchableOpacity
             style={[
-                styles.buttonContainer,
+                /*styles.buttonContainer,*/
                 type === "lg" ? {width: "95%", alignSelf: "center"} : null,
                 type === "md" ? {width: "50%", alignSelf: "center"} : null,
             ]}
@@ -22,8 +22,14 @@ export const ButtonWithIcon = (
                 fnDeOtroComponente();
             }}
         >
-
-            <Text style={styles.textButton}>{text}</Text>
+            <LinearGradient
+                colors={['#4c669f', '#3b5998', '#192f6a']} // Colores de tu HomeView
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.gradient}
+            >
+                <Text style={styles.textButton}>{text}</Text>
+            </LinearGradient>
         </TouchableOpacity>
     );
 }
@@ -40,10 +46,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 10
     },
+    gradient: {
+        flex: 1,
+        borderRadius: 25, //
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     textButton: {
-        fontWeight: "600",
+        fontWeight: "600",//bold
         fontSize: 18,
-        color: "#0D714D",
+        color: "#ffffff",
         textAlign: "center",
     }
 })

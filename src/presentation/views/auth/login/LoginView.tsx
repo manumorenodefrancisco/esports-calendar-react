@@ -15,6 +15,7 @@ const LoginView = () => {
     return (
         <ScrollView style={{flex: 1}}>
             <View>
+
                 <Text style={styles.titulo}>Iniciar sesión</Text>
 
                 <Text style={styles.label}>

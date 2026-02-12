@@ -13,7 +13,9 @@ export const styles = StyleSheet.create({
       width:  200,
       height: 200,
     },
-
+    boton:{
+        backgroundColor: "transparent",
+    },
     container: {
         paddingHorizontal: 15,
         paddingVertical: 15,

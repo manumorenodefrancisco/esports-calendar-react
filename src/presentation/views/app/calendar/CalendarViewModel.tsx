@@ -8,13 +8,13 @@ export const useCalendarViewModel = () => {
     };
 
     const markedDates = selectedDate
-        ? {
+        ?
+        {
             [selectedDate]: {
                 selected: true,
                 selectedColor: "#4f46e5"
             }
-        }
-        : {};
+        }   : {};
 
     return {
         selectedDate,
