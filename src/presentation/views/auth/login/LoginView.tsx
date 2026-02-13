@@ -2,9 +2,7 @@ import {ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native"
 import {styles} from "./LoginStyle";
 import viewModel from "./LoginViewModel"
 import { useNavigation } from "@react-navigation/native";
-import {
-    NativeStackNavigationProp,
-} from "@react-navigation/native-stack";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../../navigation/RootNavigator";
 
 const LoginView = () => {

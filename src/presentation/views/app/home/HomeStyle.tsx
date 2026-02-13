@@ -1,66 +1,21 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet, Dimensions} from "react-native";
 
+const { width, height } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
-    titleView: {
-        fontSize: 26,
-        fontWeight: "bold",
-        textAlign: "center",
-        marginBottom: 20,
-    },
 
-    itemDestacado: {
-      width:  200,
-      height: 200,
-    },
-    boton:{
-        backgroundColor: "transparent",
-    },
-    container: {
-        paddingHorizontal: 15,
-        paddingVertical: 15,
-        display: "flex",
-        flexDirection: "row",
-        borderWidth: 1,
-        borderColor: "#efefef",
-        borderRadius: 10,
-        width: "95%",
-        alignSelf: "center",
-        gap: 15,
-        justifyContent: "space-around",
-    },
-    imageContainer: {
-        borderRadius: 10,
-        overflow: "hidden"
+    titleView: {
+        position: "absolute",
+        bottom: 20,
+        left: 20,
+        fontSize: 36,
+        fontWeight: "bold",
+        color: "white",
+        textShadowColor: "rgba(0, 0, 0, 0.6)",
     },
     image: {
-        width: 110,
-        height: 140,
-        borderRadius: 10,
+        width: width,
+        height: height * 0.35,
     },
-    contentContainer: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-        gap: 10
-    },
-    titleProduct: {
-        fontWeight: "bold",
-        fontSize: 20,
-    },
-    descProduct: {
-        color: "#757575",
-    },
-    actionContainer: {
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        gap: 7,
-        alignItems: "flex-end",
-    },
-    priceProduct: {
-        fontWeight: "bold",
-        fontSize: 18,
-    }
 });
 

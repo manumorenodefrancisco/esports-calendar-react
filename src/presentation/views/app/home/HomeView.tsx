@@ -13,26 +13,31 @@ export const HomeView = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
-            <View style={{paddingTop: 20}}>
-                <Image source={require('../../../../../assets/altanto.jpg')} resizeMode={"cover"}/>
-                <Text style={styles.titleView}>Calendario</Text>
-            </View>
-                {/**/}
+        <SafeAreaView style={{ flex: 1, backgroundColor: "white", paddingHorizontal: 20 }}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, gap: 30, paddingBottom: 20 }}>
 
-            <ButtonGradient
-                text={"Iniciar sesión"}
-                fnDeOtroComponente={() => {
-                    navigation.navigate("Login");
-                }}
-            />
-            <ButtonGradient
-                text={"Registrarme"}
-                fnDeOtroComponente={() => {
-                    navigation.navigate("Registro");
-                }}
-            />
+                <View style={{ paddingTop: 20, alignItems: 'center' }}>
+                    <Image source={require('../../../../../assets/altanto.jpg')} resizeMode={"cover"} style={styles.image} />
+                    <Text style={styles.titleView}>E-Calendar</Text>
+                </View>
 
+                <View>
+                    <Text style={styles.titleView}>Iniciar sesión</Text>
+                    <ButtonGradient
+                        text={"Iniciar sesión"}
+                        fnDeOtroComponente={() => navigation.navigate("Login")}
+                    />
+                </View>
+
+                <View>
+                    <Text style={styles.titleView}>Registrarse</Text>
+                    <ButtonGradient
+                        text={"Registrarme"}
+                        fnDeOtroComponente={() => navigation.navigate("Registro")}
+                    />
+                </View>
+            </ScrollView>
         </SafeAreaView>
+
     )
 }
