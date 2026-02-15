@@ -13,16 +13,16 @@ export const HomeView = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "white", paddingHorizontal: 20 }}>
+        <SafeAreaView style={{ marginHorizontal: 20, flex: 1, backgroundColor: "white", paddingHorizontal: 20 }}>
             <ScrollView contentContainerStyle={{ flexGrow: 1, gap: 30, paddingBottom: 20 }}>
 
-                <View style={{ paddingTop: 20, alignItems: 'center' }}>
+                <View style={{paddingTop: 20, alignItems: 'center' }}>
                     <Image source={require('../../../../../assets/altanto.jpg')} resizeMode={"cover"} style={styles.image} />
-                    <Text style={styles.titleView}>E-Calendar</Text>
+                    {/*<Text style={styles.titleView}>E-calendar</Text>*/}
                 </View>
 
                 <View>
-                    <Text style={styles.titleView}>Iniciar sesión</Text>
+                    {/*<Text style={{color: "dark"}}>Iniciar sesión</Text>*/}
                     <ButtonGradient
                         text={"Iniciar sesión"}
                         fnDeOtroComponente={() => navigation.navigate("Login")}
@@ -30,7 +30,6 @@ export const HomeView = () => {
                 </View>
 
                 <View>
-                    <Text style={styles.titleView}>Registrarse</Text>
                     <ButtonGradient
                         text={"Registrarme"}
                         fnDeOtroComponente={() => navigation.navigate("Registro")}

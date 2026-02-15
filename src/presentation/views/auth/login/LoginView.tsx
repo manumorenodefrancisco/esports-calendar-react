@@ -42,7 +42,10 @@ const LoginView = () => {
 
                 <TouchableOpacity
                     style={styles.buttonSubmit}
-                    onPress={() => {iniciarSesion()}}
+                    onPress={() => {
+                            iniciarSesion();
+                            navigation.navigate("Calendar")
+                    }}
                 >
                     <Text style={{textAlign: "center", color: "#FFF"}}>Entrar</Text>
                 </TouchableOpacity>

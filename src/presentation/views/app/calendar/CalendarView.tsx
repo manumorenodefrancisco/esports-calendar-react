@@ -1,8 +1,8 @@
 import React from "react";
-import {Text, View} from "react-native";
-import {Calendar, LocaleConfig} from "react-native-calendars";
-import {useCalendarViewModel} from "./CalendarViewModel";
-import {styles} from "./CalendarStyle";
+import { Text, View, FlatList } from "react-native";
+import { Calendar, LocaleConfig } from "react-native-calendars";
+import { useCalendarViewModel } from "./CalendarViewModel";
+import { styles } from "./CalendarStyle";
 
 LocaleConfig.locales["es"] = {
     monthNames: [
@@ -24,32 +24,61 @@ LocaleConfig.locales["es"] = {
 LocaleConfig.defaultLocale = "es";
 
 export const CalendarView = () => {
+
     const {
         selectedDate,
         onDayPress,
-        markedDates
+        markedDates,
+        selectedDayEvents
     } = useCalendarViewModel();
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Selecciona una fecha</Text>
+
+            <Text style={styles.title}>Calendario Competitivo</Text>
 
             <Calendar
                 firstDay={1}
+                markingType="multi-dot"
                 onDayPress={onDayPress}
                 markedDates={markedDates}
                 theme={{
                     todayTextColor: "#4f46e5",
                     arrowColor: "#4f46e5",
-                    selectedDayBackgroundColor: "#4f46e5"
+                    selectedDayBackgroundColor: "#4f46e5",
+                    textSectionTitleColor: "#6b7280",
+                    monthTextColor: "#111827",
+                    textMonthFontWeight: "700"
                 }}
             />
 
             {selectedDate !== "" && (
                 <Text style={styles.selectedText}>
-                    Fecha seleccionada: {selectedDate}
+                    Eventos para: {selectedDate}
                 </Text>
             )}
+
+            <View style={styles.eventContainer}>
+                <FlatList
+                    data={selectedDayEvents}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <View style={styles.eventCard}>
+                            <Text style={styles.eventTitle}>
+                                {item.title}
+                            </Text>
+                        </View>
+                    )}
+                    ListEmptyComponent={
+                        selectedDate !== "" ? (
+                            <Text style={{ textAlign: "center", marginTop: 10 }}>
+                                No hay eventos este día
+                            </Text>
+                        ) : null
+                    }
+                />
+            </View>
+
         </View>
     );
 };

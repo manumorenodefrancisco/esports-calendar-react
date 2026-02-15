@@ -1,6 +1,6 @@
 import {StyleSheet, Dimensions} from "react-native";
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window"); //para ajustarnos a la pantalla
 
 export const styles = StyleSheet.create({
 
@@ -14,8 +14,11 @@ export const styles = StyleSheet.create({
         textShadowColor: "rgba(0, 0, 0, 0.6)",
     },
     image: {
-        width: width,
-        height: height * 0.35,
+        width: width * 0.95, //95%
+        height: height/3, //33%
+        //width: 110,
+        //height: 140,
+        borderRadius: 10,
     },
 });
 
