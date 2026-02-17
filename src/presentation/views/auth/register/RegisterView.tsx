@@ -1,79 +1,117 @@
-import {Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ScrollView, Text, TextInput, View} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
 import {styles} from "./RegisterStyle";
-import viewModel from "./RegisterViewModel";
+import ViewModel from "./RegisterViewModel";
+import {useNavigation} from "@react-navigation/native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {RootStackParamList} from "../../../navigation/RootNavigator";
+import {ButtonGradient} from "../../../sharedComponents/ButtonGradient";
 
 const RegisterView = () => {
 
-    const {email, password, confirmPassword, phone, address, setEmail, setPassword, setConfirmPassword, setAddress, setPhone, register} = viewModel()
+    const {
+        email,
+        password,
+        confirmPassword,
+        phone,
+        address,
+        setEmail,
+        setPassword,
+        setConfirmPassword,
+        setAddress,
+        setPhone,
+        register
+    } = ViewModel();
+
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     return (
-        <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
-            <Text style={styles.titulo}>Registro</Text>
-
-            <Text style={styles.label}>
-                Correo electrónico:
-            </Text>
-            <TextInput
-                style={styles.textInput}
-                autoComplete={"email"}
-                placeholder={"...@example.com"}
-                keyboardType={"email-address"}
-                onChangeText={text => setEmail(text)}
-            ></TextInput>
-
-
-            <Text style={styles.label}>
-                Contraseña:
-            </Text>
-            <TextInput
-                style={styles.textInput}
-                autoComplete={"password"}
-                placeholder={"******"}
-                keyboardType={"default"}
-                secureTextEntry={true}
-                onChangeText={text => setPassword(text)}
-            ></TextInput>
-
-            <Text style={styles.label}>
-                Repetir contraseña:
-            </Text>
-            <TextInput
-                style={styles.textInput}
-                autoComplete={"password"}
-                placeholder={"******"}
-                keyboardType={"default"}
-                secureTextEntry={true}
-                onChangeText={text => setConfirmPassword(text)}
-            ></TextInput>
-
-            <Text style={styles.label}>
-                Dirección:
-            </Text>
-            <TextInput
-                style={styles.textInput}
-                autoComplete={"address-line1"}
-                keyboardType={"default"}
-                onChangeText={text => setAddress(text)}
-            ></TextInput>
-
-            <Text style={styles.label}>
-                Teléfono:
-            </Text>
-            <TextInput
-                style={styles.textInput}
-                autoComplete={"tel"}
-                placeholder={"+34 123 45 67 89"}
-                keyboardType={"phone-pad"}
-                onChangeText={text => setPhone(text)}
-            ></TextInput>
-
-            <TouchableOpacity
-                style={styles.buttonSubmit}
-                onPress={() => {register()}}
+        <SafeAreaView style={styles.screen}>
+            <ScrollView
+                style={styles.scroll}
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps={"handled"}
             >
-                <Text style={{textAlign: "center", color: "#FFF"}}>Registrarme</Text>
-            </TouchableOpacity>
-        </View>
+                <View style={styles.card}>
+                    <Text style={styles.title}>Registro</Text>
+                    <Text style={styles.subtitle}>Crea una cuenta para comenzar</Text>
+
+                    <Text style={styles.label}>Email</Text>
+                    <TextInput
+                        style={styles.input}
+                        autoComplete={"email"}
+                        placeholder={"tu@email.com"}
+                        placeholderTextColor={"#6B6B6B"}
+                        keyboardType={"email-address"}
+                        autoCapitalize={"none"}
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                    />
+
+                    <Text style={styles.label}>Contraseña</Text>
+                    <TextInput
+                        style={styles.input}
+                        autoComplete={"password"}
+                        placeholder={"********"}
+                        placeholderTextColor={"#6B6B6B"}
+                        keyboardType={"default"}
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                    />
+
+                    <Text style={styles.label}>Repetir contraseña</Text>
+                    <TextInput
+                        style={styles.input}
+                        autoComplete={"password"}
+                        placeholder={"********"}
+                        placeholderTextColor={"#6B6B6B"}
+                        keyboardType={"default"}
+                        secureTextEntry={true}
+                        value={confirmPassword}
+                        onChangeText={text => setConfirmPassword(text)}
+                    />
+
+                    <Text style={styles.label}>Dirección</Text>
+                    <TextInput
+                        style={styles.input}
+                        autoComplete={"address-line1"}
+                        placeholder={"Tu dirección"}
+                        placeholderTextColor={"#6B6B6B"}
+                        keyboardType={"default"}
+                        value={address}
+                        onChangeText={text => setAddress(text)}
+                    />
+
+                    <Text style={styles.label}>Teléfono</Text>
+                    <TextInput
+                        style={styles.input}
+                        autoComplete={"tel"}
+                        placeholder={"+34 123 45 67 89"}
+                        placeholderTextColor={"#6B6B6B"}
+                        keyboardType={"phone-pad"}
+                        value={phone}
+                        onChangeText={text => setPhone(text)}
+                    />
+
+                    <View style={styles.buttonContainer}>
+                        <ButtonGradient text={"Registrarse"} fnDeOtroComponente={() => register()} />
+                    </View>
+
+                    <Text style={styles.footerText}>
+                        ¿Ya tienes cuenta?{" "}
+                        <Text
+                            style={styles.footerLink}
+                            onPress={() => {
+                                navigation.navigate("Login");
+                            }}
+                        >
+                            Inicia sesión
+                        </Text>
+                    </Text>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
