@@ -14,13 +14,14 @@ export const ButtonGradient = (
     return (
         <TouchableOpacity
             style={[
-                /*styles.buttonContainer,*/
+                styles.buttonContainer,
                 type === "lg" ? {width: "95%", alignSelf: "center"} : null,
                 type === "md" ? {width: "50%", alignSelf: "center"} : null,
             ]}
             onPress={() => {
                 fnDeOtroComponente();
             }}
+            activeOpacity={0.85}
         >
             <LinearGradient
                 colors={['#4c669f', '#3b5998', '#192f6a']} // Colores de tu HomeView
@@ -36,21 +37,16 @@ export const ButtonGradient = (
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        backgroundColor: "#D8EEE4",
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        borderRadius: 30,
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 10
+        width: "100%",
+        borderRadius: 12,
+        overflow: "hidden",
     },
     gradient: {
-        flex: 1,
-        borderRadius: 25, //
         justifyContent: 'center',
         alignItems: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        minHeight: 44,
     },
     textButton: {
         fontWeight: "600",//bold

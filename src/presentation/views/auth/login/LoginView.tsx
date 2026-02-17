@@ -1,9 +1,11 @@
-import {ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ScrollView, Text, TextInput, View} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
 import {styles} from "./LoginStyle";
 import viewModel from "./LoginViewModel"
 import { useNavigation } from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../../navigation/RootNavigator";
+import {ButtonGradient} from "../../../sharedComponents/ButtonGradient";
 
 const LoginView = () => {
 
@@ -11,53 +13,65 @@ const LoginView = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     return (
-        <ScrollView style={{flex: 1}}>
-            <View>
+        <SafeAreaView style={styles.screen}>
+            <ScrollView
+                style={styles.scroll}
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps={"handled"}
+            >
+                <View style={styles.card}>
+                    <Text style={styles.title}>Iniciar Sesión</Text>
+                    <Text style={styles.subtitle}>Ingresa tus credenciales para acceder</Text>
 
-                <Text style={styles.titulo}>Iniciar sesión</Text>
+                    <Text style={styles.label}>Email</Text>
+                    <TextInput
+                        style={styles.input}
+                        autoComplete={"email"}
+                        placeholder={"tu@email.com"}
+                        placeholderTextColor={"#6B6B6B"}
+                        keyboardType={"email-address"}
+                        autoCapitalize={"none"}
+                        onChangeText={text => setEmail(text)}
+                    />
 
-                <Text style={styles.label}>
-                    Correo electrónico:
-                </Text>
-                <TextInput
-                    style={styles.textInput}
-                    autoComplete={"email"}
-                    placeholder={"...@example.com"}
-                    keyboardType={"email-address"}
-                    onChangeText={text => setEmail(text)}
-                ></TextInput>
+                    <Text style={styles.label}>Contraseña</Text>
+                    <TextInput
+                        style={styles.input}
+                        autoComplete={"password"}
+                        placeholder={"********"}
+                        placeholderTextColor={"#6B6B6B"}
+                        keyboardType={"default"}
+                        secureTextEntry={true}
+                        onChangeText={text => setPassword(text)}
+                    />
 
+                    <View style={styles.buttonContainer}>
+                        <ButtonGradient
+                            text={"Iniciar Sesión"}
+                            fnDeOtroComponente={async () => {
+                                await iniciarSesion();
+                                navigation.reset({
+                                    index: 0,
+                                    routes: [{name: "AppTabs"}],
+                                });
+                            }}
+                        />
+                    </View>
 
-                <Text style={styles.label}>
-                    Contraseña:
-                </Text>
-                <TextInput
-                    style={styles.textInput}
-                    autoComplete={"password"}
-                    placeholder={"******"}
-                    keyboardType={"default"}
-                    secureTextEntry={true}
-                    onChangeText={text => setPassword(text)}
-                ></TextInput>
-
-                <TouchableOpacity
-                    style={styles.buttonSubmit}
-                    onPress={() => {
-                            iniciarSesion();
-                            navigation.navigate("Calendar")
-                    }}
-                >
-                    <Text style={{textAlign: "center", color: "#FFF"}}>Entrar</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={{marginTop: 20}} onPress={() => {
-                    navigation.navigate("Registro")
-                }}>
-                    <Text style={{textAlign: "center"}}>Registrarme</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+                    <Text style={styles.footerText}>
+                        ¿No tienes cuenta?{" "}
+                        <Text
+                            style={styles.footerLink}
+                            onPress={() => {
+                                navigation.navigate("Registro");
+                            }}
+                        >
+                            Regístrate
+                        </Text>
+                    </Text>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
