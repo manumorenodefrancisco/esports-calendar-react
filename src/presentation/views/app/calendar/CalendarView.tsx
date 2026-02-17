@@ -51,7 +51,7 @@ export const CalendarView = () => {
                     textMonthFontWeight: "700"
                 }}
             />
-
+            {/*si hay dia seleccionado, hace la 2a condicion*/}
             {selectedDate !== "" && (
                 <Text style={styles.selectedText}>
                     Eventos para: {selectedDate}
