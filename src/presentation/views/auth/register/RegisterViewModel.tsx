@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {RegisterUseCase} from "../../../../domain/useCases/registerUseCase";
 
 type RegisterData = {
     email: string;
@@ -15,7 +16,7 @@ const RegisterViewModel = () => {
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
 
-    const register = () => {
+    const register = async () => {
         const data: RegisterData = {
             email: email,
             password: password,
@@ -24,7 +25,12 @@ const RegisterViewModel = () => {
             phone: phone,
         }
         if (validate()) {
-            console.log("Los datos son:", data)
+            const res: any = await RegisterUseCase(data)
+            if (res && res.success === false) {
+                alert("Error al registrarse")
+                return
+            }
+            alert("Registrado")
         }
     }
 
