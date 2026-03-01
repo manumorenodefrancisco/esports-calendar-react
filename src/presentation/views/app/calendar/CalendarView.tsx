@@ -29,7 +29,8 @@ export const CalendarView = () => {
         selectedDate,
         onDayPress,
         markedDates,
-        selectedDayEvents
+        selectedDayEvents,
+        loading
     } = useCalendarViewModel();
 
     return (
@@ -58,14 +59,26 @@ export const CalendarView = () => {
                 </Text>
             )}
 
+            {loading && (
+                <Text style={{ textAlign: "center", marginTop: 10 }}>
+                    Cargando eventos...
+                </Text>
+            )}
+
             <View style={styles.eventContainer}>
                 <FlatList
                     data={selectedDayEvents}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => String(item.external_id)}
                     renderItem={({ item }) => (
                         <View style={styles.eventCard}>
                             <Text style={styles.eventTitle}>
-                                {item.title}
+                                {item.match_name}
+                            </Text>
+                            <Text>
+                                {item.league_name} - {item.tournament_name}
+                            </Text>
+                            <Text>
+                                {item.videogame_name} ({item.status})
                             </Text>
                         </View>
                     )}

@@ -1,30 +1,49 @@
-import { useState } from "react";
-
-export interface CalendarEvent {
-    id: string;
-    title: string;
-    date: string; // YYYY-MM-DD
-    type: string;
-}
+import { useState, useEffect } from "react";
+import { getEventsUseCase } from "../../../../domain/useCases/getEventsUseCase";
+import { Evento } from "../../../../domain/entities/event-interface";
 
 export const useCalendarViewModel = () => {
 
     const [selectedDate, setSelectedDate] = useState("");
+    const [events, setEvents] = useState<Evento[]>([]);
+    const [loading, setLoading] = useState(false);
 
-    // eventos de ejemplo
-    const events: CalendarEvent[] = [
-        { id: "1", title: "Torneo Valorant", date: "2026-02-18", type: "torneo" },
-        { id: "2", title: "Scrim LoL", date: "2026-02-18", type: "scrim" },
-        { id: "3", title: "Liga CS2", date: "2026-02-22", type: "liga" }
-    ];
+    useEffect(() => {
+        const cargar = async () => {
+            try {
+                setLoading(true)
+                const res = await getEventsUseCase()
+                if (res && (res as any).data && Array.isArray((res as any).data)) {
+                    setEvents((res as any).data)
+                }
+                else {
+                    setEvents([])
+                }
+            }
+            catch (e) {
+                setEvents([])
+            }
+            finally {
+                setLoading(false)
+            }
+        }
+        cargar()
+    }, [])
+
+    const getDia = (s: string) => {
+        if (!s) return ""
+        if (s.includes("T")) return s.split("T")[0]
+        return s.slice(0, 10)
+    }
 
     const onDayPress = (day: any) => {
         setSelectedDate(day.dateString);
     };
 
-    const selectedDayEvents = [];
+    const selectedDayEvents: Evento[] = [];
     for (let i = 0; i < events.length; i++) {
-        if (events[i].date === selectedDate) {
+        const d = getDia(events[i].scheduled_at)
+        if (d === selectedDate) {
             selectedDayEvents.push(events[i]);
         }
     }
@@ -34,29 +53,26 @@ export const useCalendarViewModel = () => {
     for (let i = 0; i < events.length; i++) {
 
         const event = events[i];
+        const dia = getDia(event.scheduled_at)
 
-        if (!markedDates[event.date]) {
-            markedDates[event.date] = {
+        if (!dia) continue;
+
+        if (!markedDates[dia]) {
+            markedDates[dia] = {
                 dots: []
             };
         }
 
         let color = "#4f46e5";
-
-        if (event.type === "torneo") {
+        if (event.status && event.status.toLowerCase() === "finished") {
+            color = "#10b981";
+        }
+        if (event.status && event.status.toLowerCase() === "canceled") {
             color = "#ef4444";
         }
 
-        if (event.type === "scrim") {
-            color = "#3b82f6";
-        }
-
-        if (event.type === "liga") {
-            color = "#10b981";
-        }
-
-        markedDates[event.date].dots.push({
-            key: event.id,
+        markedDates[dia].dots.push({
+            key: String(event.external_id),
             color: color
         });
     }
@@ -78,6 +94,7 @@ export const useCalendarViewModel = () => {
         selectedDate,
         onDayPress,
         markedDates,
-        selectedDayEvents
+        selectedDayEvents,
+        loading
     };
 };

@@ -9,15 +9,19 @@ const LoginViewModel = () => {
     const [password, setPassword] = useState<string>("");
 
     const iniciarSesion = async () => {
+
         const data: LoginData = {
             email: email,
             password: password
         };
 
         if (validate()) {
-            const response = await loginUseCase(data)
-            alert(`Email: ${email}, Contraseña: ${password}`)
-            console.log(data)
+            const res: any = await loginUseCase(data)
+            if (res && res.success === false) {
+                alert("Error al iniciar sesión")
+                return
+            }
+            alert("Sesión iniciada")
         }
     }
 
