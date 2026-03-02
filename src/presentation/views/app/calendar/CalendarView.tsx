@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, FlatList } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { useCalendarViewModel } from "./CalendarViewModel";
+import { CalendarViewModel } from "./CalendarViewModel";
 import { styles } from "./CalendarStyle";
 
 LocaleConfig.locales["es"] = {
@@ -31,7 +31,7 @@ export const CalendarView = () => {
         markedDates,
         selectedDayEvents,
         loading
-    } = useCalendarViewModel();
+    } = CalendarViewModel();
 
     return (
         <View style={styles.container}>

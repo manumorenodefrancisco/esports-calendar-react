@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getEventsUseCase } from "../../../../domain/useCases/getEventsUseCase";
 import { Evento } from "../../../../domain/entities/event-interface";
 
-export const useCalendarViewModel = () => {
+export const CalendarViewModel = () => {
 
     const [selectedDate, setSelectedDate] = useState("");
     const [events, setEvents] = useState<Evento[]>([]);
@@ -12,15 +12,15 @@ export const useCalendarViewModel = () => {
         const cargar = async () => {
             try {
                 setLoading(true)
-                const res = await getEventsUseCase()
-                if (res && (res as any).data && Array.isArray((res as any).data)) {
-                    setEvents((res as any).data)
+                const respuesta = await getEventsUseCase()
+                if (respuesta && (respuesta as any).data && Array.isArray((respuesta as any).data)) {
+                    setEvents((respuesta as any).data)
                 }
                 else {
                     setEvents([])
                 }
             }
-            catch (e) {
+            catch {
                 setEvents([])
             }
             finally {
@@ -48,52 +48,9 @@ export const useCalendarViewModel = () => {
         }
     }
 
-    const markedDates: any = {};
-
-    for (let i = 0; i < events.length; i++) {
-
-        const event = events[i];
-        const dia = getDia(event.scheduled_at)
-
-        if (!dia) continue;
-
-        if (!markedDates[dia]) {
-            markedDates[dia] = {
-                dots: []
-            };
-        }
-
-        let color = "#4f46e5";
-        if (event.status && event.status.toLowerCase() === "finished") {
-            color = "#10b981";
-        }
-        if (event.status && event.status.toLowerCase() === "canceled") {
-            color = "#ef4444";
-        }
-
-        markedDates[dia].dots.push({
-            key: String(event.external_id),
-            color: color
-        });
-    }
-
-    //  la marcamos
-    if (selectedDate !== "") {
-
-        if (!markedDates[selectedDate]) {
-            markedDates[selectedDate] = {
-                dots: []
-            };
-        }
-
-        markedDates[selectedDate].selected = true;
-        markedDates[selectedDate].selectedColor = "#4f46e5";
-    }
-
     return {
         selectedDate,
         onDayPress,
-        markedDates,
         selectedDayEvents,
         loading
     };
