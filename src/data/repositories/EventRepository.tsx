@@ -1,23 +1,25 @@
-import {EventRepository, EventsResponse} from "../../domain/repositories/EventRepository";
+import { EventRepository, EventsResponse } from "../../domain/repositories/EventRepository";
 import APITiendaOnline from "../sources/remote/api/APITiendaOnline";
-import {AxiosError} from "axios";
+import { AxiosError } from "axios";
 
 export class EventRepositoryImpl implements EventRepository {
 
     async getEvents(): Promise<EventsResponse> {
         try {
-            const response = await APITiendaOnline.get("/events/")
-            const data = response.data as any;
+            const response = await APITiendaOnline.get<EventsResponse>("/events/")
+            const responseData = response.data;
 
-            if (Array.isArray(data)) {
-                return Promise.resolve({success: true, data: data})
+            // { success: boolean, data: Evento[] }
+            if (responseData && Array.isArray(responseData.data)) {
+                return { success: responseData.success, data: responseData.data }
             }
 
-            return Promise.resolve(data)
+            return { success: false, data: [] }
         }
         catch (error) {
-            let e = (error as AxiosError)
-            return Promise.resolve(JSON.parse(JSON.stringify(e.response?.data)) as EventsResponse);
+            const e = error as AxiosError<EventsResponse>
+            const errorData = e.response?.data
+            return { success: false, data: Array.isArray(errorData?.data) ? errorData.data : [] }
         }
     }
 }

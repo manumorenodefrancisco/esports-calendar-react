@@ -40,8 +40,6 @@ export const HomeView = () => {
                         <TouchableOpacity
                             style={styles.contactButton}
                             onPress={() => {
-                                // Junior-friendly: dejamos el hook para cuando exista pantalla/enlace de contacto
-                                // navigation.navigate("Contacto")
                             }}
                             activeOpacity={0.85}
                         >

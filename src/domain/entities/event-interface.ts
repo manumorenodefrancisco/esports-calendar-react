@@ -1,19 +1,3 @@
-export type Opponent = {
-    id: number;
-    name: string;
-    image_url?: string | null;
-}
-
-export type Result = {
-    score: number;
-    team_id: number;
-}
-
-export type Stream = {
-    official?: boolean;
-    raw_url?: string;
-}
-
 export type Evento = {
     external_id: number;
     scheduled_at: string;
@@ -37,4 +21,20 @@ export type Evento = {
     end_at?: string | null;
     created_at?: string;
     updated_at?: string;
+}
+
+export type Opponent = {
+    id: number;
+    name: string;
+    image_url?: string | null;
+}
+
+export type Result = {
+    score: number;
+    team_id: number;
+}
+
+export type Stream = {
+    official?: boolean;
+    raw_url?: string;
 }

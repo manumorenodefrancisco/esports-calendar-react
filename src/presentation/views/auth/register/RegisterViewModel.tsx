@@ -5,24 +5,23 @@ type RegisterData = {
     email: string;
     password: string;
     confirmPassword: string;
+    username: string;
     phone?: string;
-    address: string;
 }
 
 const RegisterViewModel = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [address, setAddress] = useState('');
-    const [phone, setPhone] = useState('');
+    const [username, setUsername] = useState('');
+    //const [phone, setPhone] = useState('');
 
     const register = async () => {
         const data: RegisterData = {
             email: email,
             password: password,
             confirmPassword: confirmPassword,
-            address: address,
-            phone: phone,
+            username: username,
         }
         if (validate()) {
             const res: any = await RegisterUseCase(data)
@@ -54,13 +53,11 @@ const RegisterViewModel = () => {
         email,
         password,
         confirmPassword,
-        phone,
-        address,
+        username,
         setEmail,
         setPassword,
         setConfirmPassword,
-        setAddress,
-        setPhone,
+        setUsername,
         register
     }
 

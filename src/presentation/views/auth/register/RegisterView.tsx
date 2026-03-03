@@ -13,13 +13,11 @@ const RegisterView = () => {
         email,
         password,
         confirmPassword,
-        phone,
-        address,
+        username,
         setEmail,
         setPassword,
         setConfirmPassword,
-        setAddress,
-        setPhone,
+        setUsername,
         register
     } = ViewModel();
 
@@ -48,6 +46,17 @@ const RegisterView = () => {
                         onChangeText={text => setEmail(text)}
                     />
 
+                    <Text style={styles.label}>Username</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder={"(Opcional)"}
+                        placeholderTextColor={"#6B6B6B"}
+                        keyboardType={"default"}
+                        autoCapitalize={"none"}
+                        value={username}
+                        onChangeText={text => setUsername(text)}
+                    />
+
                     <Text style={styles.label}>Contraseña</Text>
                     <TextInput
                         style={styles.input}
@@ -72,18 +81,7 @@ const RegisterView = () => {
                         onChangeText={text => setConfirmPassword(text)}
                     />
 
-                    <Text style={styles.label}>Dirección</Text>
-                    <TextInput
-                        style={styles.input}
-                        autoComplete={"address-line1"}
-                        placeholder={"Tu dirección"}
-                        placeholderTextColor={"#6B6B6B"}
-                        keyboardType={"default"}
-                        value={address}
-                        onChangeText={text => setAddress(text)}
-                    />
-
-                    <Text style={styles.label}>Teléfono</Text>
+                    {/*<Text style={styles.label}>Teléfono</Text>
                     <TextInput
                         style={styles.input}
                         autoComplete={"tel"}
@@ -92,7 +90,7 @@ const RegisterView = () => {
                         keyboardType={"phone-pad"}
                         value={phone}
                         onChangeText={text => setPhone(text)}
-                    />
+                    />*/}
 
                     <View style={styles.buttonContainer}>
                         <ButtonGradient text={"Registrarse"} fnDeOtroComponente={() => register()} />

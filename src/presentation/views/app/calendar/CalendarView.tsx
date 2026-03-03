@@ -28,7 +28,6 @@ export const CalendarView = () => {
     const {
         selectedDate,
         onDayPress,
-        markedDates,
         selectedDayEvents,
         loading
     } = CalendarViewModel();
@@ -42,7 +41,6 @@ export const CalendarView = () => {
                 firstDay={1}
                 markingType="multi-dot"
                 onDayPress={onDayPress}
-                markedDates={markedDates}
                 theme={{
                     todayTextColor: "#4f46e5",
                     arrowColor: "#4f46e5",

@@ -49,11 +49,15 @@ const LoginView = () => {
                         <ButtonGradient
                             text={"Iniciar Sesión"}
                             fnDeOtroComponente={async () => {
-                                await iniciarSesion();
-                                navigation.reset({
-                                    index: 0,
-                                    routes: [{name: "AppTabs"}],
-                                });
+                                const ok = await iniciarSesion();
+                                alert(ok)
+                                console.log("RESULTADO LOGIN:", ok);
+                                if (ok) {
+                                    navigation.reset({
+                                        index: 0,
+                                        routes: [{name: "AppTabs"}],
+                                    });
+                                }
                             }}
                         />
                     </View>

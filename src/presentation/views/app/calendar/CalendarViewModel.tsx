@@ -4,37 +4,36 @@ import { Evento } from "../../../../domain/entities/event-interface";
 
 export const CalendarViewModel = () => {
 
-    const [selectedDate, setSelectedDate] = useState("");
-    const [events, setEvents] = useState<Evento[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(""); // antes fechaSeleccionada
+    const [events, setEvents] = useState<Evento[]>([]); // antes eventos
+    const [loading, setLoading] = useState(false); // antes estaCargando
 
     useEffect(() => {
-        const cargar = async () => {
+        const loadEvents = async () => {
+            setLoading(true)
             try {
-                setLoading(true)
-                const respuesta = await getEventsUseCase()
-                if (respuesta && (respuesta as any).data && Array.isArray((respuesta as any).data)) {
-                    setEvents((respuesta as any).data)
-                }
-                else {
+                const resultado = await getEventsUseCase()
+                if (resultado.success && Array.isArray(resultado.data)) {
+                    setEvents(resultado.data)
+                } else {
                     setEvents([])
                 }
-            }
-            catch {
+            } catch (error) {
+                console.log("Error al cargar eventos:", error)
                 setEvents([])
-            }
-            finally {
+            } finally {
                 setLoading(false)
             }
         }
-        cargar()
-    }, [])
 
-    const getDia = (s: string) => {
-        if (!s) return ""
-        if (s.includes("T")) return s.split("T")[0]
-        return s.slice(0, 10)
-    }
+        loadEvents();
+    }, []);
+
+    const getDate = (dateTime: string) => {
+        if (!dateTime) return "";
+        if (dateTime.includes("T")) return dateTime.split("T")[0];
+        return dateTime.slice(0, 10);
+    };
 
     const onDayPress = (day: any) => {
         setSelectedDate(day.dateString);
@@ -42,8 +41,8 @@ export const CalendarViewModel = () => {
 
     const selectedDayEvents: Evento[] = [];
     for (let i = 0; i < events.length; i++) {
-        const d = getDia(events[i].scheduled_at)
-        if (d === selectedDate) {
+        const eventDate = getDate(events[i].scheduled_at);
+        if (eventDate === selectedDate) {
             selectedDayEvents.push(events[i]);
         }
     }

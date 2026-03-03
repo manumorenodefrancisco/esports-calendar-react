@@ -10,11 +10,13 @@ export class AuthRepositoryImpl implements AuthRepository {
     async login(data: LoginData): Promise<DataResponseAPI> {
         try {
             const response = await APITiendaOnline.post("/login/", data)
-            return Promise.resolve(response.data)
+            return response.data;
+            //return Promise.resolve(response.data)
         }
         catch (error) {
             let e = (error as AxiosError)
-            return Promise.resolve(JSON.parse(JSON.stringify(e.response?.data)) as DataResponseAPI);
+            return e.response?.data as DataResponseAPI;
+            //return Promise.resolve(JSON.parse(JSON.stringify(e.response?.data)) as DataResponseAPI);
         }
     }
 
